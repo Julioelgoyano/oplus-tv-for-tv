@@ -1,0 +1,59 @@
+name: Compilar APK (proyector / Smart TV)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Crear el proyecto Android
+        run: npx cap add android
+
+      - name: Generar íconos y pantalla de carga
+        run: npx @capacitor/assets generate --android
+
+      - name: Código nativo (control remoto) y ajustes de Smart TV en el manifiesto
+        run: |
+          cp native/*.java android/app/src/main/java/com/oplustv/tv/
+          mkdir -p android/app/src/main/res/drawable
+          cp native/banner.png android/app/src/main/res/drawable/banner.png
+          M=android/app/src/main/AndroidManifest.xml
+          grep -q usesCleartextTraffic "$M" || sed -i 's/<application/<application android:usesCleartextTraffic="true"/' "$M"
+          grep -q 'android:banner' "$M" || sed -i 's/<application/<application android:banner="@drawable\/banner"/' "$M"
+          grep -q screenOrientation "$M" || sed -i 's/<activity/<activity android:screenOrientation="landscape"/' "$M"
+          grep -q 'software.leanback' "$M" || sed -i 's#<application#<uses-feature android:name="android.software.leanback" android:required="false" />\n    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />\n    <application#' "$M"
+          grep -q LEANBACK_LAUNCHER "$M" || sed -i 's#<category android:name="android.intent.category.LAUNCHER" />#<category android:name="android.intent.category.LAUNCHER" />\n                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />#' "$M"
+          echo "----- AndroidManifest.xml -----"
+          cat "$M"
+
+      - name: Copiar la página a la app
+        run: npx cap sync android
+
+      - name: Compilar el APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Guardar el APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: OPLUS-TV-proyector-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
