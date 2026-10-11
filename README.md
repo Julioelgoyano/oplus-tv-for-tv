@@ -19,9 +19,10 @@ Se instala con otro nombre interno (`com.oplustv.tv`), así que **no reemplaza**
 |---|---|
 | **OK** o **←** | Abre la lista de canales y categorías |
 | **↑ / ↓** | Canal anterior / siguiente |
-| **→** o **MENÚ** | Menú rápido: favoritos, calidad, tamaño de imagen, sonido, reiniciar canal, ayuda |
+| **→** | Menú rápido: favoritos, calidad, tamaño de imagen, sonido, reiniciar canal, ayuda |
+| **INFO** o **≡** (las tres líneas / «hamburguesa») | Muestra / oculta la barra de información del canal |
 | **Números** | Ir directo a un canal (por ejemplo `1` `2`) |
-| **CH+ / CH−**, **INFO**, **GUÍA**, **PLAY/PAUSA**, botones de color | Si tu control los tiene: canal ±, datos del programa, guía, pausa, rojo = menú, verde = lista, amarillo = favorito, azul = guía |
+| **CH+ / CH−**, **GUÍA**, **PLAY/PAUSA**, botones de color | Si tu control los tiene: canal ±, guía, pausa, rojo = menú, verde = lista, amarillo = favorito, azul = guía |
 | **ATRÁS** | Cierra el panel abierto; con la imagen limpia, dos veces seguidas = salir |
 | **Volumen** | Lo maneja el propio proyector |
 

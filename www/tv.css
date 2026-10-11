@@ -6,7 +6,7 @@
 /* ===== O-PLUS TV · modo Smart TV / proyector =====
    Todo en rem: la interfaz se escala sola con el ancho de la pantalla (720p, 1080p...).
    CSS sencillo a propósito: el WebView del proyector puede ser viejo y tiene poca RAM. */
-html.tv{font-size:1.25vw;background:#000;-webkit-tap-highlight-color:transparent;cursor:none}
+html.tv{font-size:1.25vw;background:#000;-webkit-tap-highlight-color:transparent}
 html.tv,html.tv body{height:100%;margin:0;overflow:hidden;background:#000}
 html.tv body{display:block!important;padding:0!important;font-family:Poppins,system-ui,sans-serif;font-size:1rem;color:#eaf2f8;-webkit-user-select:none;user-select:none}
 html.tv :focus{outline:0}
@@ -79,7 +79,7 @@ html.tv #list .empty{padding:2rem 1rem;font-size:1.2rem;color:#8da5ba}
 #tvmenu.open{transform:none;visibility:visible;transition:transform .2s,visibility 0s}
 #tvmenu h2{flex:none;margin:0 0 .9rem;font-size:1.6rem;font-weight:700}
 #tvmenu h2 sup{font-size:.9rem;color:#c2347f;margin-left:.2rem}
-.tvbtn{display:block;flex:none;width:100%;margin:0 0 .45rem;padding:.7rem 1.2rem;border:2px solid transparent;border-radius:1rem;background:#0d1c2e;color:#eaf2f8;font:600 1.2rem/1.2 Poppins,system-ui,sans-serif;text-align:left}
+.tvbtn{display:block;flex:none;width:100%;margin:0 0 .35rem;padding:.6rem 1.2rem;border:2px solid transparent;border-radius:1rem;background:#0d1c2e;color:#eaf2f8;font:600 1.2rem/1.2 Poppins,system-ui,sans-serif;text-align:left}
 .tvbtn small{display:block;margin-top:.15rem;font-size:.9rem;font-weight:400;color:#8da5ba}
 .tvbtn:focus{background:#1fc8d6;color:#04222a;border-color:#fff}
 .tvbtn:focus small{color:#0a4650}
@@ -125,3 +125,4 @@ html.tv #list .empty{padding:2rem 1rem;font-size:1.2rem;color:#8da5ba}
 #tvtest .big{margin:1.2rem 0 .3rem;font-size:3rem;font-weight:700;color:#1fc8d6;text-align:center;word-break:break-all}
 #tvtest .sub{text-align:center;font-size:1.3rem;color:#eaf2f8;min-height:1.6rem}
 #tvtest .note{margin-top:1.2rem;font-size:1rem;color:#8da5ba;text-align:center;line-height:1.5}
+

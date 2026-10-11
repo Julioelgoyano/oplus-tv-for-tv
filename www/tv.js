@@ -33,6 +33,8 @@ function fillBanner(){
 function showBanner(ms){if(ui)return;try{fillBanner()}catch{}bn.classList.add("show");clearTimeout(bnT);bnT=setTimeout(()=>bn.classList.remove("show"),ms||5000)}
 function hideBanner(){clearTimeout(bnT);bn.classList.remove("show")}
 
+function toggleInfo(){if(bn.classList.contains("show"))hideBanner();else showBanner(10000)}
+
 // Al cambiar de canal (flechas, números, lista, guía) siempre aparece el banner.
 const _play=window.play;
 window.play=function(){const r=_play.apply(this,arguments);showBanner();return r};
@@ -143,8 +145,8 @@ gRows.addEventListener("focusin",e=>{const r=e.target.closest&&e.target.closest(
 // Ayuda
 const help=h("div");help.id="tvhelp";
 help.innerHTML='<div class="box"><h2>Control remoto</h2>'+[
- ["OK / ←","Abrir la lista de canales"],["↑ / ↓","Canal anterior / siguiente"],["→  o  MENÚ","Menú rápido (calidad, imagen, favoritos...)"],
- ["CH+ / CH−","Canal siguiente / anterior (si tu control los tiene)"],["Números","Ir directo a un canal (ej. 12)"],["INFO","Ver datos del canal y del programa"],
+ ["OK / ←","Abrir la lista de canales"],["↑ / ↓","Canal anterior / siguiente"],["→","Menú rápido (calidad, imagen, favoritos...)"],["INFO  o  ≡ (3 líneas)","Mostrar / ocultar la barra de información del canal"],
+ ["CH+ / CH−","Canal siguiente / anterior (si tu control los tiene)"],["Números","Ir directo a un canal (ej. 12)"],
  ["GUÍA","Guía de programación"],["Amarillo","Agregar / quitar favorito"],["ATRÁS","Cerrar paneles · 2 veces seguidas = salir"],["Volumen","Lo maneja el proyector"]
 ].map(r=>'<div class="row"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>').join("")+'<div class="ok"></div></div>';
 document.body.append(help);
@@ -226,9 +228,9 @@ function act(k){
       if(!ov.hidden&&/^Toca/.test(g("ovt").textContent)){ov.click();break} // "Toca para reproducir"
       openUi("list");break}
     case "left": case "green": openUi("list");break;
-    case "right": case "menu": case "red": openUi("menu");break;
+    case "right": case "red": case "menu": openUi("menu");break;
     case "guide": case "blue": openUi("guide");break;
-    case "info": bn.classList.contains("show")?hideBanner():showBanner(7000);break;
+    case "info": toggleInfo();break;
     case "yellow": toggleFav();break;
     case "pp": if(v2.paused){v2.play();toast("▶ Reproduciendo")}else{v2.pause();toast("❚❚ Pausa")}break;
   }
@@ -258,7 +260,7 @@ addEventListener("tvkey",e=>act(e.detail));
 
 // Desde un teclado (o el navegador): mismas acciones. Se atiende en la fase de captura para ganarle al atajo viejo de la página.
 const KM={ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right",Enter:"ok",NumpadEnter:"ok",PageUp:"chdown",PageDown:"chup",
-  ChannelUp:"chup",ChannelDown:"chdown",ContextMenu:"menu",Menu:"menu",F1:"menu",Info:"info",i:"info",I:"info",Guide:"guide",g:"guide",G:"guide",
+  ChannelUp:"chup",ChannelDown:"chdown",ContextMenu:"info",Menu:"info",F1:"info",Info:"info",i:"info",I:"info",Guide:"guide",g:"guide",G:"guide",
   MediaPlayPause:"pp",MediaPlay:"pp",MediaPause:"pp",y:"yellow"};
 const OFF={f:1,F:1,p:1,P:1,"/":1};
 addEventListener("keydown",e=>{

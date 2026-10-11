@@ -47,9 +47,13 @@ public class MainActivity extends BridgeActivity {
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_NUMPAD_ENTER: return "ok";
+            // Botón INFO / ≡ (tres líneas, "hamburguesa"): muestra u oculta la barra de información del canal.
             case KeyEvent.KEYCODE_MENU:
-            case KeyEvent.KEYCODE_SETTINGS: return "menu";
-            case KeyEvent.KEYCODE_INFO: return "info";
+            case KeyEvent.KEYCODE_INFO:
+            case KeyEvent.KEYCODE_TV_CONTENTS_MENU:
+            case KeyEvent.KEYCODE_TV_MEDIA_CONTEXT_MENU:
+            case KeyEvent.KEYCODE_MEDIA_TOP_MENU: return "info";
+            case KeyEvent.KEYCODE_SETTINGS: return "menu";   // engranaje: menú rápido
             case KeyEvent.KEYCODE_GUIDE: return "guide";
             case KeyEvent.KEYCODE_CHANNEL_UP:
             case KeyEvent.KEYCODE_PAGE_DOWN:
