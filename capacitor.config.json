@@ -1,0 +1,13 @@
+{
+  "appId": "com.oplustv.tv",
+  "appName": "O-PLUS TV",
+  "webDir": "www",
+  "backgroundColor": "#000000",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

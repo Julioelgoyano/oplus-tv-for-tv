@@ -1,0 +1,127 @@
+@font-face{font-family:Poppins;font-weight:400;font-style:normal;font-display:swap;src:url(vendor/fonts/poppins-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:500;font-style:normal;font-display:swap;src:url(vendor/fonts/poppins-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:600;font-style:normal;font-display:swap;src:url(vendor/fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:700;font-style:normal;font-display:swap;src:url(vendor/fonts/poppins-latin-700-normal.woff2) format("woff2")}
+
+/* ===== O-PLUS TV · modo Smart TV / proyector =====
+   Todo en rem: la interfaz se escala sola con el ancho de la pantalla (720p, 1080p...).
+   CSS sencillo a propósito: el WebView del proyector puede ser viejo y tiene poca RAM. */
+html.tv{font-size:1.25vw;background:#000;-webkit-tap-highlight-color:transparent;cursor:none}
+html.tv,html.tv body{height:100%;margin:0;overflow:hidden;background:#000}
+html.tv body{display:block!important;padding:0!important;font-family:Poppins,system-ui,sans-serif;font-size:1rem;color:#eaf2f8;-webkit-user-select:none;user-select:none}
+html.tv :focus{outline:0}
+
+/* lo que no se usa con control remoto */
+html.tv header,html.tv .info,html.tv .stage>.hint,html.tv #fs,html.tv #gdlg,html.tv #tabs,html.tv .screen .tools{display:none!important}
+
+/* el video ocupa TODA la pantalla, siempre */
+html.tv main{display:block!important;padding:0!important;margin:0!important;height:100%}
+html.tv .stage{display:block!important;padding:0!important;margin:0!important}
+html.tv .screen{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;height:auto!important;max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;aspect-ratio:auto!important;z-index:1;background:#000}
+html.tv .screen .plyr,html.tv .screen .plyr__video-wrapper{position:absolute!important;top:0;left:0;width:100%!important;height:100%!important;margin:0!important;padding:0!important;border-radius:0!important}
+html.tv .screen video{position:absolute!important;top:0;left:0;width:100%!important;height:100%!important;border-radius:0!important;object-fit:contain;background:#000}
+html.tv .screen.fit-cover video{object-fit:cover}
+html.tv .screen.fit-fill video{object-fit:fill}
+html.tv .plyr__controls,html.tv .plyr__control--overlaid{display:none!important}
+
+/* cargando / error */
+html.tv .over{z-index:10;font-size:1.25rem;background:rgba(0,0,0,.72)}
+html.tv .over strong{font-size:1.9rem}
+html.tv .over p{font-size:1.15rem;max-width:34rem;margin:.6rem auto 0}
+html.tv .spin{width:4.2rem;height:4.2rem;border-width:.35rem}
+html.tv #retry{font-size:1.3rem;padding:.7rem 2rem;border-radius:1rem}
+html.tv #retry:focus,html.tv .over:focus{border-color:#1fc8d6;box-shadow:0 0 0 .2rem #1fc8d6}
+
+/* aviso corto (número de canal, "Pausa", etc.) */
+html.tv #toast{top:2.2rem!important;right:3rem!important;bottom:auto!important;left:auto!important;transform:none!important;z-index:60;font-size:1.7rem;font-weight:600;padding:.6rem 1.6rem;border-radius:1rem;background:rgba(5,11,18,.92);border:1px solid rgba(255,255,255,.14);color:#fff}
+
+/* ---------- banner de canal (aparece al cambiar de canal o con INFO) ---------- */
+#tvbanner{position:fixed;left:3rem;right:3rem;bottom:2.6rem;z-index:15;display:flex;align-items:center;padding:1.1rem 1.6rem;border-radius:1.3rem;background:rgba(5,11,18,.93);border:1px solid rgba(255,255,255,.12);opacity:0;visibility:hidden;transform:translateY(1.2rem);transition:opacity .25s,transform .25s,visibility 0s .25s;pointer-events:none}
+#tvbanner.show{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .25s,visibility 0s}
+#tvbanner .bn-num{flex:none;min-width:5rem;font-size:3rem;font-weight:700;color:#1fc8d6;text-align:center;margin-right:1rem}
+#tvbanner .logo{flex:none;width:5rem;height:5rem;margin-right:1.3rem;border-radius:1rem;display:grid;place-items:center;font-weight:700;font-size:1.4rem;overflow:hidden;background:#163959}
+#tvbanner .logo img{width:100%;height:100%;object-fit:contain}
+#tvbanner .bn-txt{flex:1;min-width:0}
+#tvbanner .bn-name{font-size:1.7rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tvbanner .bn-now{margin-top:.2rem;font-size:1.15rem;font-weight:500;color:#eaf2f8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tvbanner .bn-next{margin-top:.1rem;font-size:1rem;color:#8da5ba;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tvbanner .bn-bar{height:.4rem;margin-top:.55rem;border-radius:1rem;background:#1d3550;overflow:hidden}
+#tvbanner .bn-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fc8d6,#c2347f)}
+#tvbanner .bn-tags{flex:none;margin-left:1.3rem;text-align:right}
+#tvbanner .bn-tag{display:inline-block;margin-left:.5rem;padding:.25rem .8rem;border-radius:2rem;font-size:.95rem;font-weight:700;background:#c2347f;color:#fff}
+#tvbanner .bn-tag.fav{background:#f5b301;color:#2a1c00}
+#tvbanner .bn-hint{margin-top:.5rem;font-size:.9rem;color:#8da5ba}
+
+/* ---------- panel de canales (botón OK) ---------- */
+html.tv aside{position:fixed!important;top:0;left:0;bottom:0;width:37rem;max-width:none;z-index:20;display:flex!important;flex-direction:column;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:rgba(5,11,18,.96);box-shadow:.5rem 0 3rem rgba(0,0,0,.7);transform:translateX(-105%);visibility:hidden;transition:transform .2s,visibility 0s .2s}
+html.tv aside.open{transform:none;visibility:visible;transition:transform .2s,visibility 0s}
+html.tv aside .chips{flex:none;display:flex;flex-wrap:nowrap;overflow:hidden;padding:1.2rem 1.2rem .9rem!important;margin:0!important}
+html.tv aside .chip{flex:none;margin-right:.6rem;padding:.55rem 1.3rem;border-radius:2rem;font-size:1.1rem;font-weight:600;border:2px solid transparent;background:#111a24;color:#eaf2f8}
+html.tv aside .chip[aria-pressed="true"]{background:#163959;border-color:#1fc8d6}
+html.tv aside .chip:focus{background:#1fc8d6;color:#04222a;border-color:#fff}
+html.tv #list{flex:1;display:block!important;overflow:hidden;padding:.4rem 1rem 1.5rem!important;margin:0!important;list-style:none}
+html.tv #list li{margin:0 0 .5rem!important;padding:0}
+html.tv #list .ch{width:100%;height:5.2rem;display:flex;align-items:center;padding:.5rem .9rem!important;border:2px solid transparent;border-radius:1rem;background:#0d1c2e;color:#eaf2f8;text-align:left;position:relative}
+html.tv #list .ch[aria-current="true"]{border-color:#1d6b78}
+html.tv #list .ch:focus{background:#16445f;border-color:#1fc8d6;box-shadow:0 0 0 .2rem #1fc8d6}
+html.tv #list .num{flex:none;width:3rem;font-size:1.2rem;font-weight:700;color:#8da5ba;text-align:center}
+html.tv #list .logo{flex:none;width:3.6rem;height:3.6rem;margin:0 1rem 0 .3rem;border-radius:.8rem;font-size:1.1rem}
+html.tv #list .nm{flex:1;min-width:0;padding:0!important}
+html.tv #list .nm b{display:block;font-size:1.25rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.tv #list .nm small{display:block;font-size:.95rem;color:#8da5ba;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.tv #list .fav{flex:none;position:static!important;width:3.2rem;height:3.2rem;margin-left:.6rem;padding:0;border:0;border-radius:50%;font-size:1.5rem;background:transparent;color:#4b6178;opacity:1}
+html.tv #list .fav[aria-pressed="true"]{color:#ff5c93}
+html.tv #list .fav:focus{background:#c2347f;color:#fff;transform:scale(1.15)}
+html.tv #list .empty{padding:2rem 1rem;font-size:1.2rem;color:#8da5ba}
+
+/* ---------- menú rápido (botón → o MENU) ---------- */
+#tvmenu{position:fixed;top:0;right:0;bottom:0;width:28rem;z-index:20;display:flex;flex-direction:column;overflow:hidden;padding:1.4rem 1.4rem;background:rgba(5,11,18,.96);box-shadow:-.5rem 0 3rem rgba(0,0,0,.7);transform:translateX(105%);visibility:hidden;transition:transform .2s,visibility 0s .2s}
+#tvmenu.open{transform:none;visibility:visible;transition:transform .2s,visibility 0s}
+#tvmenu h2{flex:none;margin:0 0 .9rem;font-size:1.6rem;font-weight:700}
+#tvmenu h2 sup{font-size:.9rem;color:#c2347f;margin-left:.2rem}
+.tvbtn{display:block;flex:none;width:100%;margin:0 0 .45rem;padding:.7rem 1.2rem;border:2px solid transparent;border-radius:1rem;background:#0d1c2e;color:#eaf2f8;font:600 1.2rem/1.2 Poppins,system-ui,sans-serif;text-align:left}
+.tvbtn small{display:block;margin-top:.15rem;font-size:.9rem;font-weight:400;color:#8da5ba}
+.tvbtn:focus{background:#1fc8d6;color:#04222a;border-color:#fff}
+.tvbtn:focus small{color:#0a4650}
+
+/* ---------- guía de programación ---------- */
+#tvguide{position:fixed;top:0;left:0;right:0;bottom:0;z-index:25;display:flex;padding:1.6rem 2.4rem 3.2rem;background:#050b12;visibility:hidden;opacity:0;transition:opacity .2s,visibility 0s .2s}
+#tvguide.open{visibility:visible;opacity:1;transition:opacity .2s,visibility 0s}
+#tvguide .tvg-list{flex:none;width:40%;overflow:hidden;padding-right:1.4rem}
+#tvguide .tvg-title{margin:0 0 .9rem;font-size:1.6rem;font-weight:700}
+#tvguide .tvg-title sup{font-size:.9rem;color:#c2347f;margin-left:.2rem}
+#tvguide .tvg-row{display:flex;align-items:center;width:100%;height:4.6rem;margin:0 0 .45rem;padding:.4rem .9rem;border:2px solid transparent;border-radius:1rem;background:#0d1c2e;color:#eaf2f8;text-align:left;font-family:inherit}
+#tvguide .tvg-row.cur{border-color:#1d6b78}
+#tvguide .tvg-row:focus{background:#16445f;border-color:#1fc8d6;box-shadow:0 0 0 .2rem #1fc8d6}
+#tvguide .tvg-row .n{flex:none;width:2.8rem;font-size:1.1rem;font-weight:700;color:#8da5ba;text-align:center}
+#tvguide .tvg-row .t{flex:1;min-width:0;margin-left:.6rem}
+#tvguide .tvg-row b{display:block;font-size:1.15rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tvguide .tvg-row small{display:block;font-size:.9rem;color:#8da5ba;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tvguide .tvg-detail{flex:1;min-width:0;padding:1.6rem 1.8rem;border-radius:1.4rem;background:#0b1624;border:1px solid #1d3550;overflow:hidden}
+#tvguide .tvg-detail h3{margin:0;font-size:1.8rem;font-weight:700}
+#tvguide .tvg-detail .cat{margin:.2rem 0 1rem;font-size:1rem;color:#8da5ba}
+#tvguide .tvg-now{padding:1rem 1.2rem;margin-bottom:1rem;border-radius:1rem;background:#112540;border-left:.3rem solid #c2347f}
+#tvguide .tvg-now .l{font-size:.85rem;font-weight:700;letter-spacing:.08em;color:#c2347f}
+#tvguide .tvg-now .p{margin-top:.2rem;font-size:1.4rem;font-weight:600}
+#tvguide .tvg-now .h{margin-top:.1rem;font-size:1rem;color:#8da5ba}
+#tvguide .tvg-now .bar{height:.4rem;margin:.6rem 0;border-radius:1rem;background:#1d3550;overflow:hidden}
+#tvguide .tvg-now .bar i{display:block;height:100%;background:linear-gradient(90deg,#1fc8d6,#c2347f)}
+#tvguide .tvg-now .d{font-size:1rem;line-height:1.45;color:#b9cada;max-height:5.8rem;overflow:hidden}
+#tvguide .tvg-next{display:flex;padding:.55rem .4rem;border-bottom:1px solid #16293f;font-size:1.1rem}
+#tvguide .tvg-next .h{flex:none;width:5.8rem;color:#1fc8d6;font-weight:600}
+#tvguide .tvg-next .p{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tvguide .tvg-empty{font-size:1.15rem;color:#8da5ba;line-height:1.5}
+#tvguide .tvg-foot{position:absolute;left:2.4rem;right:2.4rem;bottom:1rem;font-size:.95rem;color:#6d8499}
+
+/* ---------- ayuda y prueba del control remoto ---------- */
+#tvhelp,#tvtest{position:fixed;top:0;left:0;right:0;bottom:0;z-index:30;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9)}
+#tvhelp.open,#tvtest.open{display:flex}
+#tvhelp .box,#tvtest .box{width:52rem;max-width:90%;padding:2rem 2.4rem;border-radius:1.6rem;background:#0b1624;border:1px solid #1d3550}
+#tvhelp h2,#tvtest h2{margin:0 0 1rem;font-size:1.6rem}
+#tvhelp .row{display:flex;padding:.45rem 0;border-bottom:1px solid #16293f;font-size:1.15rem}
+#tvhelp .row b{flex:none;width:17rem;color:#1fc8d6}
+#tvhelp .row span{flex:1;color:#dbe7f1}
+#tvhelp .ok{margin-top:1.2rem}
+#tvtest .big{margin:1.2rem 0 .3rem;font-size:3rem;font-weight:700;color:#1fc8d6;text-align:center;word-break:break-all}
+#tvtest .sub{text-align:center;font-size:1.3rem;color:#eaf2f8;min-height:1.6rem}
+#tvtest .note{margin-top:1.2rem;font-size:1rem;color:#8da5ba;text-align:center;line-height:1.5}
